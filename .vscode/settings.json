@@ -1,8 +1,0 @@
-{
-    "editor.fontSize": 18,
-    "workbench.colorTheme": "Noctis Minimus",
-    "workbench.iconTheme": "vscode-icons",
-    "files.associations": {
-        "stdlib.h": "c"
-    }
-}
