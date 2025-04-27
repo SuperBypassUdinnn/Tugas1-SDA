@@ -48,18 +48,33 @@ Node* mergeKLists(Node** lists, int listsSize)
 {
     if (listsSize == 0) return NULL;
     
-    // Mulai dengan linked list pertama sebagai hasil
-    Node* result = lists[0];
+    // Cari linked list pertama yang tidak kosong sebagai awal hasil
+    Node* result = NULL;
+    int firstNonEmpty = -1;
     
-    // Gabungkan satu per satu linked list lainnya
-    for (int i = 1; i < listsSize; i++) 
+    for (int i = 0; i < listsSize; i++) 
+    {
+        if (lists[i] != NULL) 
+        {
+            result = lists[i];
+            firstNonEmpty = i;
+            break;
+        }
+    }
+    
+    // Jika semua linked list kosong
+    if (firstNonEmpty == -1) 
+        return NULL;
+    
+    // Gabungkan linked list lainnya
+    for (int i = firstNonEmpty + 1; i < listsSize; i++) 
     {
         Node* current = lists[i];
         while (current != NULL) 
         {
-            Node* next = current->next;  // Simpan node berikutnya
-            insertSorted(&result, current);  // Sisipkan ke hasil
-            current = next;  // Lanjut ke node berikutnya
+            Node* next = current->next;
+            insertSorted(&result, current);
+            current = next;
         }
     }
     
@@ -67,7 +82,8 @@ Node* mergeKLists(Node** lists, int listsSize)
 }
 
 // Fungsi untuk mencetak linked list
-void printList(Node* head) {
+void printList(Node* head) 
+{
     Node* current = head;
     while (current != NULL) 
     {
@@ -110,8 +126,8 @@ int main() {
     lists[1]->next->next = createNode(4);
     
     // Inisialisasi linked list ketiga: 2 -> 6
-    lists[2] = createNode(2);
-    lists[2]->next = createNode(6);
+    lists[2] = NULL;
+    // lists[2]->next = createNode(6);
     
     // Gabungkan semua linked list
     Node* mergedList = mergeKLists(lists, k);
