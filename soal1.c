@@ -78,7 +78,7 @@ Node* mergeKLists(Node** lists, int listsSize) {
     
     // Jika semua linked list kosong
     if (firstNonEmpty == -1) 
-        return NULL;
+    return NULL;
     
     // Gabungkan linked list lainnya
     for (int i = firstNonEmpty + 1; i < listsSize; i++) {
@@ -91,29 +91,6 @@ Node* mergeKLists(Node** lists, int listsSize) {
     }
     
     return result;
-}
-
-// Fungsi untuk mencetak linked list
-void printList(Node* head) {
-    Node* current = head;
-    printf("[");
-    while (current != NULL) {
-        printf("%d", current->data);
-        if (current->next)
-            printf(", ");
-        current = current->next;
-    }
-    printf("]\n");
-}
-
-// Fungsi untuk membebaskan memori linked list
-void freeList(Node* head) {
-    Node* temp;
-    while (head != NULL) {
-        temp = head;
-        head = head->next;
-        free(temp);
-    }
 }
 
 // Fungsi untuk memproses input string menjadi linked list
@@ -138,6 +115,29 @@ Node* processInput(const char* input) {
     
     free(inputCopy);
     return head;
+}
+
+// Fungsi untuk mencetak linked list
+void printList(Node* head) {
+    Node* current = head;
+    printf("[");
+    while (current != NULL) {
+        printf("%d", current->data);
+        if (current->next)
+            printf(", ");
+        current = current->next;
+    }
+    printf("]\n");
+}
+
+// Fungsi untuk membebaskan memori linked list
+void freeList(Node* head) {
+    Node* temp;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
 }
 
 int main() 
