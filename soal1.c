@@ -1,19 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Definisi Node
-typedef struct Node 
-{
+typedef struct Node {
     int data;
     struct Node* next;
 } Node;
 
-// Fungsi untuk membuat node baru
-Node* createNode(int data) 
+void clearTerminal()
 {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+// Fungsi untuk membuat node baru
+Node* createNode(int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    if (newNode == NULL) 
-    {
+    if (newNode == NULL) {
         printf("Alokasi memory gagal\n");
         exit(1);
     }
@@ -22,17 +29,27 @@ Node* createNode(int data)
     return newNode;
 }
 
+// Fungsi untuk menambahkan node di akhir linked list
+void appendNode(Node** head, int data) {
+    Node* newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+    } else {
+        Node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+}
+
 // Fungsi untuk menyisipkan node ke dalam linked list terurut
-void insertSorted(Node** head, Node* newNode) 
-{
+void insertSorted(Node** head, Node* newNode) {
     // Jika linked list kosong atau data baru lebih kecil dari head
-    if (*head == NULL || (*head)->data >= newNode->data) 
-    {
+    if (*head == NULL || (*head)->data >= newNode->data) {
         newNode->next = *head;
         *head = newNode;
-    } 
-    else 
-    {
+    } else {
         Node* current = *head;
         // Menemukan posisi yang tepat untuk menyisipkan
         while (current->next != NULL && current->next->data < newNode->data)
@@ -44,18 +61,15 @@ void insertSorted(Node** head, Node* newNode)
 }
 
 // Fungsi untuk menggabungkan array linked list
-Node* mergeKLists(Node** lists, int listsSize) 
-{
+Node* mergeKLists(Node** lists, int listsSize) {
     if (listsSize == 0) return NULL;
     
     // Cari linked list pertama yang tidak kosong sebagai awal hasil
     Node* result = NULL;
     int firstNonEmpty = -1;
     
-    for (int i = 0; i < listsSize; i++) 
-    {
-        if (lists[i] != NULL) 
-        {
+    for (int i = 0; i < listsSize; i++) {
+        if (lists[i] != NULL) {
             result = lists[i];
             firstNonEmpty = i;
             break;
@@ -67,11 +81,9 @@ Node* mergeKLists(Node** lists, int listsSize)
         return NULL;
     
     // Gabungkan linked list lainnya
-    for (int i = firstNonEmpty + 1; i < listsSize; i++) 
-    {
+    for (int i = firstNonEmpty + 1; i < listsSize; i++) {
         Node* current = lists[i];
-        while (current != NULL) 
-        {
+        while (current != NULL) {
             Node* next = current->next;
             insertSorted(&result, current);
             current = next;
@@ -82,52 +94,71 @@ Node* mergeKLists(Node** lists, int listsSize)
 }
 
 // Fungsi untuk mencetak linked list
-void printList(Node* head) 
-{
+void printList(Node* head) {
     Node* current = head;
-    while (current != NULL) 
-    {
+    printf("[");
+    while (current != NULL) {
         printf("%d", current->data);
         if (current->next)
-            printf(" -> ");
-
+            printf(", ");
         current = current->next;
     }
-    printf("\n");
+    printf("]\n");
 }
 
 // Fungsi untuk membebaskan memori linked list
-void freeList(Node* head) 
-{
+void freeList(Node* head) {
     Node* temp;
-    while (head != NULL) 
-    {
+    while (head != NULL) {
         temp = head;
         head = head->next;
         free(temp);
     }
 }
 
-int main() {
-    // Contoh penggunaan
-    int k = 3; // Jumlah linked list
+// Fungsi untuk memproses input string menjadi linked list
+Node* processInput(const char* input) {
+    Node* head = NULL;
+    char* token;
+    char* inputCopy = strdup(input); // Buat salinan input untuk dipecah
     
-    // Buat array of linked lists
-    Node* lists[3];
+    token = strtok(inputCopy, ",");
+    while (token != NULL) {
+        // Hilangkan spasi di awal dan akhir token
+        while (*token == ' ') token++;
+        int len = strlen(token);
+        while (len > 0 && token[len-1] == ' ') {
+            token[--len] = '\0';
+        }
+        
+        int num = atoi(token);
+        appendNode(&head, num);
+        token = strtok(NULL, ",");
+    }
     
-    // Inisialisasi linked list pertama: 1 -> 4 -> 5
-    lists[0] = createNode(1);
-    lists[0]->next = createNode(4);
-    lists[0]->next->next = createNode(5);
+    free(inputCopy);
+    return head;
+}
+
+int main() 
+{
+    clearTerminal();   
+    int k;
+    char input[100];
     
-    // Inisialisasi linked list kedua: 1 -> 3 -> 4
-    lists[1] = createNode(1);
-    lists[1]->next = createNode(3);
-    lists[1]->next->next = createNode(4);
+    printf("Masukkan banyak linked list = ");
+    scanf("%d", &k);
+    getchar(); // Membuang newline setelah scanf
     
-    // Inisialisasi linked list ketiga: 2 -> 6
-    lists[2] = NULL;
-    // lists[2]->next = createNode(6);
+    Node* lists[k];
+    
+    for (int i = 0; i < k; i++) {
+        printf("Masukkan linked list ke-%d = ", i+1);
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = '\0'; // Hapus newline
+        
+        lists[i] = processInput(input);
+    }
     
     // Gabungkan semua linked list
     Node* mergedList = mergeKLists(lists, k);
