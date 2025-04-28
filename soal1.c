@@ -195,7 +195,7 @@ int main()
     Node* mergedList = mergeKLists(lists, k);
     
     // Cetak hasil
-    printf("\nHasil gabungan list: ");
+    printf("\nHasil gabungan list:\n");
     printList(mergedList);
     
     // Bebaskan memori list
