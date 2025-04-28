@@ -3,7 +3,8 @@
 #include <string.h>
 
 // Definisi Node
-typedef struct Node {
+typedef struct Node 
+{
     int data;
     struct Node* next;
 } Node;
@@ -18,7 +19,8 @@ void clearTerminal()
 }
 
 // Fungsi untuk membuat node baru
-Node* createNode(int data) {
+Node* createNode(int data) 
+{
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode == NULL) {
         printf("Alokasi memory gagal\n");
@@ -30,26 +32,31 @@ Node* createNode(int data) {
 }
 
 // Fungsi untuk menambahkan node di akhir linked list
-void appendNode(Node** head, int data) {
+void appendNode(Node** head, int data) 
+{
     Node* newNode = createNode(data);
-    if (*head == NULL) {
+    if (*head == NULL) 
         *head = newNode;
-    } else {
+    else 
+    {
         Node* current = *head;
-        while (current->next != NULL) {
+        while (current->next != NULL)
             current = current->next;
-        }
         current->next = newNode;
     }
 }
 
 // Fungsi untuk menyisipkan node ke dalam linked list terurut
-void insertSorted(Node** head, Node* newNode) {
+void insertSorted(Node** head, Node* newNode) 
+{
     // Jika linked list kosong atau data baru lebih kecil dari head
-    if (*head == NULL || (*head)->data >= newNode->data) {
+    if (*head == NULL || (*head)->data >= newNode->data) 
+    {
         newNode->next = *head;
         *head = newNode;
-    } else {
+    } 
+    else 
+    {
         Node* current = *head;
         // Menemukan posisi yang tepat untuk menyisipkan
         while (current->next != NULL && current->next->data < newNode->data)
@@ -61,15 +68,18 @@ void insertSorted(Node** head, Node* newNode) {
 }
 
 // Fungsi untuk menggabungkan array linked list
-Node* mergeKLists(Node** lists, int listsSize) {
+Node* mergeKLists(Node** lists, int listsSize) 
+{
     if (listsSize == 0) return NULL;
     
     // Cari linked list pertama yang tidak kosong sebagai awal hasil
     Node* result = NULL;
     int firstNonEmpty = -1;
     
-    for (int i = 0; i < listsSize; i++) {
-        if (lists[i] != NULL) {
+    for (int i = 0; i < listsSize; i++) 
+    {
+        if (lists[i] != NULL) 
+        {
             result = lists[i];
             firstNonEmpty = i;
             break;
@@ -81,9 +91,11 @@ Node* mergeKLists(Node** lists, int listsSize) {
     return NULL;
     
     // Gabungkan linked list lainnya
-    for (int i = firstNonEmpty + 1; i < listsSize; i++) {
+    for (int i = firstNonEmpty + 1; i < listsSize; i++) 
+    {
         Node* current = lists[i];
-        while (current != NULL) {
+        while (current != NULL) 
+        {
             Node* next = current->next;
             insertSorted(&result, current);
             current = next;
@@ -94,19 +106,20 @@ Node* mergeKLists(Node** lists, int listsSize) {
 }
 
 // Fungsi untuk memproses input string menjadi linked list
-Node* processInput(const char* input) {
+Node* processInput(const char* input) 
+{
     Node* head = NULL;
     char* token;
     char* inputCopy = strdup(input); // Buat salinan input untuk dipecah
     
     token = strtok(inputCopy, ",");
-    while (token != NULL) {
+    while (token != NULL) 
+    {
         // Hilangkan spasi di awal dan akhir token
         while (*token == ' ') token++;
         int len = strlen(token);
-        while (len > 0 && token[len-1] == ' ') {
+        while (len > 0 && token[len-1] == ' ')
             token[--len] = '\0';
-        }
         
         int num = atoi(token);
         appendNode(&head, num);
@@ -118,10 +131,12 @@ Node* processInput(const char* input) {
 }
 
 // Fungsi untuk mencetak linked list
-void printList(Node* head) {
+void printList(Node* head) 
+{
     Node* current = head;
     printf("[");
-    while (current != NULL) {
+    while (current != NULL) 
+    {
         printf("%d", current->data);
         if (current->next)
             printf(", ");
@@ -131,9 +146,11 @@ void printList(Node* head) {
 }
 
 // Fungsi untuk membebaskan memori linked list
-void freeList(Node* head) {
+void freeList(Node* head) 
+{
     Node* temp;
-    while (head != NULL) {
+    while (head != NULL) 
+    {
         temp = head;
         head = head->next;
         free(temp);
@@ -142,18 +159,32 @@ void freeList(Node* head) {
 
 int main() 
 {
-    clearTerminal();   
     int k;
-    char input[100];
     
-    printf("Masukkan banyak linked list = ");
-    scanf("%d", &k);
+    clearTerminal(); 
+    // Menentukan banyak linked list dalam array  
+    printf("Masukkan banyak linked list: ");
+    if (scanf("%d", &k) == 0)
+    {
+        printf("Masukkan angka, keluar program...\n");
+        return 0;
+    }
     getchar(); // Membuang newline setelah scanf
+    // Jika k < 0, keluar program
+    if (k < 0)
+    {
+        printf("Banyak linked list minimal 0, keluar program...\n");
+        return 0;
+    }
     
-    Node* lists[k];
+    Node* lists[k]; // Deklarasi array linked list
     
-    for (int i = 0; i < k; i++) {
-        printf("Masukkan linked list ke-%d = ", i+1);
+    char input[100]; // Buffer input
+    clearTerminal();
+    printf("Contoh input linked list: 1, 2, 5,...\n\n");   
+    for (int i = 0; i < k; i++) 
+    {
+        printf("Masukkan linked list ke-%d: ", i+1);
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = '\0'; // Hapus newline
         
@@ -164,10 +195,10 @@ int main()
     Node* mergedList = mergeKLists(lists, k);
     
     // Cetak hasil
-    printf("Hasil List Gabungan: ");
+    printf("\nHasil gabungan list: ");
     printList(mergedList);
     
-    // Bebaskan memori
+    // Bebaskan memori list
     freeList(mergedList);
     
     return 0;
