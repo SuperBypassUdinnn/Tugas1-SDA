@@ -18,7 +18,7 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
     
     for (int i = 0; i < listsSize; i++) 
     {
-        if (lists[i] != NULL) 
+        if (lists[i] != NULL)
         {
             result = lists[i];
             firstNonEmpty = i;
