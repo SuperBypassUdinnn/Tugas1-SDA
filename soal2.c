@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Definisi Node.
+// Definisi Node.
 typedef struct Node 
 {
     int nilai;
     struct Node *next;
 } Node;
-    
+ 
+// Fungsi untuk membersihkan terminal
 void clearTerminal()
 {
     #ifdef _WIN32
@@ -46,6 +47,8 @@ void appendNode(Node** head, int nilai)
     }
 }
 
+// Fungsi untuk membagi linked list menjadi yang lebih besar
+// dan yang lebih kecil kemudian menggabungkannya kembali
 Node* partition(Node* head, int x) 
 {
     Node* leftPart = NULL;
@@ -153,9 +156,13 @@ int main()
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0'; // Hapus newline
     
-    int x;
+    int x; // Nilai banding linked list
     printf("Masukkan nilai banding (x): ");
-    scanf("%d", &x);
+    if (scanf("%d", &x) == 0)
+    {
+        printf("Masukkan angka, keluar program...\n");
+        return 0;
+    }
     
     Node* list = processInput(input);
     Node* result = partition(list, x);
