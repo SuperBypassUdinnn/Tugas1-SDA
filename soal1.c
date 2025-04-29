@@ -9,6 +9,7 @@ typedef struct Node
     struct Node* next;
 } Node;
 
+// Fungsi untuk membersihkan terminal
 void clearTerminal()
 {
     #ifdef _WIN32
