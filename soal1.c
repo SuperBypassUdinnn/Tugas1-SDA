@@ -179,7 +179,7 @@ int main()
     
     Node* lists[k]; // Deklarasi array linked list
     
-    char input[100]; // Buffer input
+    char input[100];
     clearTerminal();
     printf("Contoh input linked list: 1, 2, 5,...\n\n");   
     for (int i = 0; i < k; i++) 
