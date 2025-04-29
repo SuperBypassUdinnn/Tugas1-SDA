@@ -163,7 +163,7 @@ int main()
     
     clearTerminal(); 
     // Menentukan banyak linked list dalam array  
-    printf("Masukkan banyak linked list: ");
+    printf("Masukkan banyak list: ");
     if (scanf("%d", &k) == 0)
     {
         printf("Masukkan angka, keluar program...\n");
@@ -173,7 +173,7 @@ int main()
     // Jika k < 0, keluar program
     if (k < 0)
     {
-        printf("Banyak linked list minimal 0, keluar program...\n");
+        printf("Banyak list minimal 0, keluar program...\n");
         return 0;
     }
     
@@ -181,10 +181,10 @@ int main()
     
     char input[100];
     clearTerminal();
-    printf("Contoh input linked list: 1, 2, 5,...\n\n");   
+    printf("Contoh input list: 1, 2, 5,...\n\n");   
     for (int i = 0; i < k; i++) 
     {
-        printf("Masukkan linked list ke-%d: ", i+1);
+        printf("Masukkan list ke-%d: ", i+1);
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = '\0'; // Hapus newline
         
