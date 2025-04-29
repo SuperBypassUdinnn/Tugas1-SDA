@@ -5,7 +5,7 @@
 // Definisi Node
 struct ListNode 
 {
-    int data;
+    int nilai;
     struct ListNode* next;
 };
 
@@ -39,9 +39,8 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
         while (temp != NULL) 
         {
             struct ListNode* next = temp->next;
-            
             // Menyisipkan node linked list lain ke linked pertama 
-            if (result == NULL || (result)->data >= temp->data) 
+            if (result == NULL || (result)->nilai >= temp->nilai) 
             {
                 temp->next = result;
                 result = temp;
@@ -50,7 +49,7 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
             {
                 struct ListNode* current = result;
                 // Menemukan posisi yang tepat untuk menyisipkan
-                while (current->next != NULL && current->next->data < temp->data)
+                while (current->next != NULL && current->next->nilai < temp->nilai)
                     current = current->next;
 
                 temp->next = current->next;
