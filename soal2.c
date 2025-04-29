@@ -91,6 +91,31 @@ Node* partition(Node* head, int x)
     return leftPart;
 }
 
+// Fungsi untuk memproses input string menjadi linked list
+Node* processInput(const char* input) 
+{
+    Node* head = NULL;
+    char* token;
+    char* inputCopy = strdup(input); // Buat salinan input untuk dipecah
+    
+    token = strtok(inputCopy, ",");
+    while (token != NULL) 
+    {
+        // Hilangkan spasi di awal dan akhir token
+        while (*token == ' ') token++;
+        int len = strlen(token);
+        while (len > 0 && token[len-1] == ' ')
+            token[--len] = '\0';
+        
+        int num = atoi(token);
+        appendNode(&head, num);
+        token = strtok(NULL, ",");
+    }
+    
+    free(inputCopy);
+    return head;
+}
+
 // Fungsi untuk mencetak linked list
 void printList(Node* head) 
 {
@@ -120,17 +145,24 @@ void freeList(Node* head)
 
 int main()
 {
+    char input[100];
+    
     clearTerminal();
-    Node* list = NULL;
-    appendNode(&list, 4);
-    appendNode(&list, 2);
-    appendNode(&list, 8);
-    appendNode(&list, 1);
-    appendNode(&list, 5);
-
-    Node* result = partition(list, 3);
-
+    printf("Contoh input linked list: 1, 2, 5,...\n\n");   
+    printf("Masukkan linked list: ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0'; // Hapus newline
+    
+    int x;
+    printf("Masukkan nilai banding (x): ");
+    scanf("%d", &x);
+    
+    Node* list = processInput(input);
+    Node* result = partition(list, x);
+    
+    clearTerminal();
+    printf("Hasil: \n");
     printList(result);
-
+    
     return 0;
 }
