@@ -148,8 +148,8 @@ int main()
     char input[100];
     
     clearTerminal();
-    printf("Contoh input linked list: 1, 2, 5,...\n\n");   
-    printf("Masukkan linked list: ");
+    printf("Contoh input list: 1, 2, 5,...\n\n");   
+    printf("Masukkan list: ");
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0'; // Hapus newline
     
@@ -160,9 +160,12 @@ int main()
     Node* list = processInput(input);
     Node* result = partition(list, x);
     
-    clearTerminal();
-    printf("Hasil: \n");
+    // Cetak hasil
+    printf("\nHasil: \n");
     printList(result);
     
+    // Bebaskan memori list
+    freeList(result);
+
     return 0;
 }
