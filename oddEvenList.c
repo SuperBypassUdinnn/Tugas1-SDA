@@ -5,7 +5,6 @@ struct ListNode{
     int val;
     struct ListNode *next;
 };
-// struct ListNode* head = NULL;
 
 struct ListNode* oddEvenList(struct ListNode* head) {
     struct ListNode* current = head;
