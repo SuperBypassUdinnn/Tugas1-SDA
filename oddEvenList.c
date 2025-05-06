@@ -21,19 +21,19 @@ struct ListNode* oddEvenList(struct ListNode* head) {
             
             }
             else {
-                ganjiltail->next = current;    
+                ganjiltail->next = current;    //menghimpun angka ganjil
                 ganjiltail = current;
             
             }
         }
         
         else {
-           if (genaphead == NULL){
+           if (genaphead == NULL){              // inisialisasi genaphead sekaligus genaptail
             genaphead = genaptail = current;
             
            }
            else {
-            genaptail->next = current;
+            genaptail->next = current;           // menghimpun angka genap
             genaptail = current;
            }
         }
