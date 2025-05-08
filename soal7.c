@@ -1,3 +1,11 @@
+#include <stdio.h>
+
+// Definisi struct ListNode
+struct ListNode {
+    int val;
+    struct ListNode* next;
+};
+
 struct ListNode* removeElements(struct ListNode* head, int val) {
     // Membuat dummy node untuk menangani kasus saat head perlu dihapus
     struct ListNode dummy;
