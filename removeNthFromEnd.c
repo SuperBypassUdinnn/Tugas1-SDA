@@ -82,19 +82,30 @@ struct ListNode* createListFromInput() {
 
 // Driver code
 int main() {
-    struct ListNode* head = createListFromInput();
+    struct ListNode* node1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node4 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node5 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node6 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* node7 = (struct ListNode*)malloc(sizeof(struct ListNode));
 
-    printf("Original list: ");
+    node1->val = 1;
+    node1->next = node2;
+    node2->val = 2;
+    node2->next = node3;
+    node3->val = 3;
+    node3->next = node4;
+    node4->val = 4;
+    node4->next = node5;
+    node5->val = 5;
+    node5->next = node6;
+    node6->val = 6;
+    node6->next = node7;
+    node7->val = 7;
+    node7->next = NULL;
+
+    struct ListNode* head = removeNthFromEnd(node1, 2);
     printList(head);
-
-    int n;
-    printf("Masukkan posisi n dari akhir yang ingin dihapus: ");
-    scanf("%d", &n);
-
-    head = removeNthFromEnd(head, n);
-
-    printf("List setelah menghapus node ke-%d dari akhir: ", n);
-    printList(head);
-
     return 0;
 }
