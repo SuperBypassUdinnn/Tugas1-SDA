@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdio.h>
 
 // Definisi struktur node
 struct ListNode {
