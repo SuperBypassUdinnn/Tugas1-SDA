@@ -44,11 +44,11 @@ struct ListNode* oddEvenList(struct ListNode* head) {
    
     }
 
-    if (ganjiltail != NULL) {            //menyambungkan ganjil tail dan genap
+    if (ganjilhead != NULL) {            //menyambungkan ganjil tail dan genap
         ganjiltail->next = genaphead;
     }
     
-    if (genaptail != NULL) {
+    else (genaphead != NULL) {
         genaptail->next = NULL;
     }
     
