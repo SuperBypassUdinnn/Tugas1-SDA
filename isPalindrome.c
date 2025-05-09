@@ -1,6 +1,11 @@
 include<stdio.h>
 include<stdbool.h>
 
+ struct ListNode {
+ int val;
+ struct ListNode *next;
+};
+
 bool isPalindrome(struct ListNode* head){
     
     int stack [105]; //105 sesuai syarat di soal
