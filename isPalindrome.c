@@ -5,7 +5,7 @@ bool isPalindrome(struct ListNode* head){
     
     int stack [105]; //105 sesuai syarat di soal
     int count = 0;   //nyimpan panjang node
-    int end = 0;     //perbandingan node dan stack;
+    int end = 0;     //perbandingan node dan stack
     
     struct ListNode* temp = head;
 
