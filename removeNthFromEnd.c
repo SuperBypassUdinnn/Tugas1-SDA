@@ -7,6 +7,39 @@ struct ListNode {
     struct ListNode* next;
 };
 
+// Fungsi untuk menghapus node ke-n dari akhir linked list
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    struct ListNode dummy;
+    dummy.next = head;
+    struct ListNode* first = &dummy;
+    struct ListNode* second = &dummy;
+    
+    if (n <= 0) {
+        return head; // Jika n tidak valid, kembalikan head asli
+    }
+    
+    // Geser pointer `first` sejauh `n + 1` langkah
+    for (int i = 0; i <= n; i++) {
+        first = first->next;
+        if (first == NULL && i < n) {
+            return head; // Jika n lebih besar dari panjang list, kembalikan head asli
+        }
+    }
+    
+    // Geser kedua pointer hingga `first` mencapai akhir
+    while (first != NULL) {
+        first = first->next;
+        second = second->next;
+    }
+    
+    // Hapus node ke-n dari akhir
+    struct ListNode* temp = second->next;
+    second->next = second->next->next;
+    free(temp);
+    
+    return dummy.next;
+}
+
 // Fungsi untuk membuat node baru
 struct ListNode* createNode(int val) {
     struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
@@ -25,56 +58,23 @@ void printList(struct ListNode* head) {
     printf("\n");
 }
 
-// Fungsi untuk menghapus node ke-n dari akhir linked list
-struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
-    struct ListNode dummy;
-    dummy.next = head;
-    struct ListNode* first = &dummy;
-    struct ListNode* second = &dummy;
-
-    if (n <= 0) {
-        return head; // Jika n tidak valid, kembalikan head asli
-    }
-
-    // Geser pointer `first` sejauh `n + 1` langkah
-    for (int i = 0; i <= n; i++) {
-        first = first->next;
-        if (first == NULL && i < n) {
-            return head; // Jika n lebih besar dari panjang list, kembalikan head asli
-        }
-    }
-
-    // Geser kedua pointer hingga `first` mencapai akhir
-    while (first != NULL) {
-        first = first->next;
-        second = second->next;
-    }
-
-    // Hapus node ke-n dari akhir
-    struct ListNode* temp = second->next;
-    second->next = second->next->next;
-    free(temp);
-
-    return dummy.next;
-}
-
 // Fungsi untuk membuat linked list dari input pengguna
 struct ListNode* createListFromInput() {
     int n, val;
     struct ListNode *head = NULL, *tail = NULL;
-
+    
     printf("Masukkan jumlah elemen dalam linked list: ");
     scanf("%d", &n);
-
+    
     if (n <= 0) {
         return NULL;
     }
-
+    
     printf("Masukkan elemen-elemen:\n");
     for (int i = 0; i < n; i++) {
         scanf("%d", &val);
         struct ListNode* newNode = createNode(val);
-
+        
         if (head == NULL) {
             head = newNode;
             tail = newNode;
