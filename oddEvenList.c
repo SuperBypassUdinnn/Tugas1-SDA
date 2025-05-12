@@ -14,50 +14,39 @@ struct ListNode* oddEvenList(struct ListNode* head) {
 
     while (current != NULL){
 
-        if (current->val % 2 != 0){            //jika ganjilhead masih kosong inisialisasi ganjilhead bersamaan dengan tail
-            if (ganjilhead == NULL){
-            ganjilhead = ganjiltail = current;
-            
+        if (current->val % 2 != 0){ 
+            if (ganjilhead == NULL){ 
+                ganjilhead = ganjiltail = current; // inisialisasi ganjilhead sekaligus ganjiltail
             }
             else {
                 ganjiltail->next = current;    //menghimpun angka ganjil
                 ganjiltail = current;
-            
             }
         }
         
         else {
-           if (genaphead == NULL){              // inisialisasi genaphead sekaligus genaptail
-            genaphead = genaptail = current;
-            
-           }
-           else {
-            genaptail->next = current;           // menghimpun angka genap
-            genaptail = current;
-           }
+            if (genaphead == NULL){              
+            genaphead = genaptail = current; // inisialisasi genaphead sekaligus genaptail
+            }
+            else {
+                genaptail->next = current; // menghimpun angka genap
+                genaptail = current;
+            }
         }
          
-           struct ListNode* nextNode = current->next;       //memutus pointer ke node lama
-           current->next = NULL;  
-           current = nextNode;    
-   
+        struct ListNode* nextNode = current->next; //memutus pointer ke node lama
+        current->next = NULL;  
+        current = nextNode;    
     }
 
-   if (ganjilhead != NULL) {
-        if (genaphead != NULL){
-        ganjiltail->next = genaphead;
-        genaptail->next = NULL;
-        return ganjilhead;
-        }
-        else {
-            return ganjilhead;
-        }
+    if (genaphead != NULL){
+        genaptail->next = NULL; // memutus pointer ke node genap terakhir
     }
-    else {
-        if(genaphead != NULL){
-            genaptail->next = NULL;
-            return genaphead;
-        }
-        
+
+    if (ganjilhead != NULL) {
+        ganjiltail->next = genaphead; // menggabungkan ganjil dan genap
     }
+    else return genaphead; // jika tidak ada angka ganjil, kembalikan genaphead
+    
+    return ganjilhead;
 }
