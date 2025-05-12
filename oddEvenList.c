@@ -35,8 +35,8 @@ struct ListNode* oddEvenList(struct ListNode* head) {
         }
          
         struct ListNode* nextNode = current->next; //memutus pointer ke node lama
-        current->next = NULL;  
-        current = nextNode;    
+        current->next = NULL; 
+        current = nextNode;
     }
 
     if (genaphead != NULL){
