@@ -32,9 +32,16 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
     struct ListNode* first = &dummy;
     struct ListNode* second = &dummy;
 
+    if (n <= 0) {
+        return head; // Jika n tidak valid, kembalikan head asli
+    }
+
     // Geser pointer `first` sejauh `n + 1` langkah
     for (int i = 0; i <= n; i++) {
         first = first->next;
+        if (first == NULL && i < n) {
+            return head; // Jika n lebih besar dari panjang list, kembalikan head asli
+        }
     }
 
     // Geser kedua pointer hingga `first` mencapai akhir
@@ -105,7 +112,7 @@ int main() {
     node7->val = 7;
     node7->next = NULL;
 
-    struct ListNode* head = removeNthFromEnd(node1, 2);
+    struct ListNode* head = removeNthFromEnd(node1, 8); 
     printList(head);
     return 0;
 }
