@@ -53,9 +53,7 @@ struct ListNode* partition(struct ListNode* head, int x)
     // Kondisi terdapat node lebih kecil dari x
     if (leftPart != NULL)
         leftTail->next = rightPart;
-    
-    // Kembalikan list kanan jika tidak
-    else return rightPart;
+    else return rightPart; // Kembalikan list kanan jika tidak ada list kiri
 
     // Mengembalikan hasil
     return leftPart;
