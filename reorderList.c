@@ -6,19 +6,6 @@ struct ListNode {
     struct ListNode* next;
 };
 
-// Fungsi untuk membalik linked list
-struct ListNode* reverseList(struct ListNode* head) {
-    struct ListNode* prev = NULL;
-    struct ListNode* curr = head;
-    while (curr != NULL) {
-        struct ListNode* nextTemp = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = nextTemp;
-    }
-    return prev;
-}
-
 // Fungsi utama untuk mengurutkan ulang linked list
 void reorderList(struct ListNode* head) {
     if (head == NULL || head->next == NULL) return;
@@ -32,7 +19,17 @@ void reorderList(struct ListNode* head) {
     }
 
     // Membalik separuh kedua list
-    struct ListNode* second = reverseList(slow->next);
+    struct ListNode* prev = NULL;
+    struct ListNode* curr = slow->next;
+    while (curr != NULL) {
+        struct ListNode* nextTemp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextTemp;
+    }
+    
+    // Simpan pointer ke bagian kedua yang dibalik
+    struct ListNode* second = prev; 
     slow->next = NULL; // putuskan hubungan antara dua bagian list
 
     // Menggabungkan dua bagian secara bergantian
